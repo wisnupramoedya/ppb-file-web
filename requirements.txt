@@ -1,7 +1,0 @@
-Masuk ke venv.
-Install:
-flask
-PIL
-numpy
-tensorflow
-cv2
