@@ -20,7 +20,6 @@ def process_image():
     return jsonify({'status': 'success', 'msg': f'Result: {result}'})
 
 @presences.route('/presences')
-
 def list():
     presences = Presence.query.all()
     results = {
@@ -55,7 +54,7 @@ def create_presence():
         image_ktp = image_ktp,
         image_face = image_face,
         image_mask = image_mask,
-        mask = True
+        mask = 1
     )
 
     db.session.add(presence)

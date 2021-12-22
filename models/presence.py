@@ -13,7 +13,7 @@ class Presence(db.Model):
     image_ktp = db.Column(db.String(255))
     image_face = db.Column(db.String(255))
     image_mask = db.Column(db.String(255))
-    mask = db.Column(db.Boolean)
+    mask = db.Column(db.Integer)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self) -> str:
