@@ -31,17 +31,19 @@ Jika ada error Tensorflow karena CUDA, bisa dilupakan saja.
 
 ## Migration
 
+Apabila `app.db` tidak ada, maka bisa ikuti cara ini.
+
 Jalankan jika tidak ada folder `migrations`
 ```
 flask db init
 ```
 
-Lalu, jalankan ini untuk memasukkan migration
+Lalu, jalankan ini untuk memasukkan migration di sini akan menghasilkan `version` di folder `migrations`
 ```
 flask db migrate
 ```
 
-Jalankan ini untuk memasukkan migration ke db.
+Jalankan ini untuk memasukkan migration ke db, maka akan tercipta `app.db`
 ```
 flask db upgrade
 ```
