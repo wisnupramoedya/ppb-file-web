@@ -9,6 +9,9 @@ tensorflow = "==2.7.0"
 opencv-python = "==4.5.2.54"
 pillow = "==8.0.0"
 numpy = "==1.21.0"
+python-dotenv = "==0.19.2"
+flask-sqlalchemy = "*"
+flask-migrate = "*"
 
 [dev-packages]
 

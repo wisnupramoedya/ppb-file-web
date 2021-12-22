@@ -1,4 +1,4 @@
-from os import stat
+from flask import url_for
 from PIL import Image
 from io import BytesIO
 import base64
@@ -7,6 +7,7 @@ import cv2
 
 class GenerateImage:
     DIM = (224, 224)
+    STATIC_FOLDER = 'static/'
 
     @staticmethod
     def decodeImageToCV(base_file):
@@ -18,4 +19,11 @@ class GenerateImage:
 
         return cv_image
 
+    @staticmethod
+    def decodeBase64toImage(base_string, prefix, id):
+        filename = "image/{}_{}.png".format(prefix, id)
+        with open(GenerateImage.STATIC_FOLDER + filename, "wb") as fh:
+            fh.write(base64.b64decode(base_string))
+        
+        return url_for('static', filename=filename)
     

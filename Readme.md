@@ -20,7 +20,7 @@ pipenv install --dev
 ```
 4. Untuk menjalankan aplikasi, jalankan
 ```
-python app.py
+flask run
 ```
 
 ## VSCode Support
@@ -28,3 +28,22 @@ Untuk menjalankan interpreter dari Python, cukup copas `where python` setelah ma
 
 ## Error Tensorflow
 Jika ada error Tensorflow karena CUDA, bisa dilupakan saja.
+
+## Migration
+
+Jalankan jika tidak ada folder `migrations`
+```
+flask db init
+```
+
+Lalu, jalankan ini untuk memasukkan migration
+```
+flask db migrate
+```
+
+Jalankan ini untuk memasukkan migration ke db.
+```
+flask db upgrade
+```
+
+Jika ada error `DLL load failed`, masukkan file sqlite3.dll dan sqlite3.def dari [https://www.sqlite.org/download.html](https://www.sqlite.org/download.html) ke lokasi `pip -V` di Anaconda Prompt. Folder hasilnya misal `C:\ProgramData\Anaconda3\lib\site-packages\pip` masukkan ke `C:\ProgramData\Anaconda3\DLLs`.
