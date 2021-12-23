@@ -8,7 +8,7 @@ from app import db
 class Presence(db.Model):
     id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     name = db.Column(db.String(55), index=True)
-    nik = db.Column(db.String(16), index=True, unique=True)
+    nik = db.Column(db.String(16), index=True)
     image_mask = db.Column(db.String(255))
     mask = db.Column(db.Integer)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
