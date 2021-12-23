@@ -32,7 +32,7 @@ def detail(id):
 def create_presence():
     date_now = datetime.now().strftime("%Y%m%d_%H%M%S")
     image_mask = GenerateImage.decodeBase64toImage(request.form["image_mask"], "image_mask", date_now)
-    mask = GenerateImage.process_image(request.form["image_mask"])
+    mask = GenerateImage.process_image(image_mask)
     
     presence = Presence(
         name = request.form["name"],

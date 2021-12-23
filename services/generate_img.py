@@ -12,14 +12,10 @@ class GenerateImage:
     STATIC_FOLDER = 'static/'
 
     @staticmethod
-    def decodeImageToCV(base_file):
-        image = base64.b64decode(base_file)
-        arr_image = np.array(Image.open(BytesIO(image)).convert('RGB'))
+    def decodeImageToCV(image_loc):
+        image = cv2.imread(image_loc, cv2.COLOR_BGR2RGB)
 
-        cv_image = arr_image[:, :, ::-1].copy()
-        cv_image = cv2.resize(cv_image, dsize=GenerateImage.DIM)
-
-        return cv_image
+        return image
 
     @staticmethod
     def decodeBase64toImage(base_string, prefix, id):

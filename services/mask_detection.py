@@ -1,11 +1,27 @@
 import numpy as np
 import tensorflow as tf
+from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
+from tensorflow.keras.preprocessing.image import img_to_array
+from mtcnn import MTCNN
+import cv2
 
 class MaskDetection:
     @staticmethod
     def classifyImage(image):
-        input_data = np.array(image, dtype=np.float32)
-        input_data = np.expand_dims(input_data, axis=0)
+        detector = MTCNN()
+        faces = detector.detect_faces(image)
+
+        for result in faces:
+            x, y, w, h = result['box']
+            x1, y1 = x + w, y + h
+
+            face = image[y:y1, x:x1]
+            # face = cv2.cvtColor(face, cv2.COLOR_BGR2)
+            face = cv2.resize(face, (224, 224))
+            face = img_to_array(face)
+            face = preprocess_input(face)
+            face = np.expand_dims(face, axis=0)
+            break
 
         interpreter = tf.lite.Interpreter(model_path='mask_model.tflite')
         interpreter.allocate_tensors()
@@ -16,7 +32,7 @@ class MaskDetection:
 
         # Test model on random input data.
         input_shape = input_details[0]['shape']
-        interpreter.set_tensor(input_details[0]['index'], input_data)
+        interpreter.set_tensor(input_details[0]['index'], face)
         interpreter.invoke()
 
         # The function `get_tensor()` returns a copy of the tensor data.

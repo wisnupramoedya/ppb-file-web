@@ -12,6 +12,7 @@ numpy = "==1.21.0"
 python-dotenv = "==0.19.2"
 flask-sqlalchemy = "*"
 flask-migrate = "*"
+mtcnn = "*"
 
 [dev-packages]
 
