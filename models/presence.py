@@ -9,9 +9,6 @@ class Presence(db.Model):
     id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     name = db.Column(db.String(55), index=True)
     nik = db.Column(db.String(16), index=True, unique=True)
-    image_profile = db.Column(db.String(255))
-    image_ktp = db.Column(db.String(255))
-    image_face = db.Column(db.String(255))
     image_mask = db.Column(db.String(255))
     mask = db.Column(db.Integer)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
@@ -23,6 +20,6 @@ class Presence(db.Model):
         result = { c.name: getattr(self, c.name) for c in self.__table__.columns }
         for index, value in result.items():
            if index.startswith("image_"):
-               result[index] = request.url_root + value[1:]
+               result[index] = request.url_root + value
         return result
 

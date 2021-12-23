@@ -5,6 +5,8 @@ import base64
 import numpy as np
 import cv2
 
+from services.mask_detection import MaskDetection
+
 class GenerateImage:
     DIM = (224, 224)
     STATIC_FOLDER = 'static/'
@@ -25,5 +27,10 @@ class GenerateImage:
         with open(GenerateImage.STATIC_FOLDER + filename, "wb") as fh:
             fh.write(base64.b64decode(base_string))
         
-        return url_for('static', filename=filename)
+        return GenerateImage.STATIC_FOLDER + filename
+
+    @staticmethod
+    def process_image(file):
+        cv_image = GenerateImage.decodeImageToCV(file)
+        return MaskDetection.classifyImage(cv_image)
     

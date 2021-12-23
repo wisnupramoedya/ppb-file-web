@@ -4,7 +4,6 @@ from models.presence import Presence
 from app import db
 
 from services.generate_img import GenerateImage
-from services.mask_detection import MaskDetection
 
 presences = Blueprint('presences', __name__)
 
@@ -12,49 +11,34 @@ presences = Blueprint('presences', __name__)
 def index():
     return 'Hello World!'
 
-@presences.route('/img', methods=['POST'])
-def process_image():
-    file = request.form['image']
-    cv_image = GenerateImage.decodeImageToCV(file)
-    result = MaskDetection.classifyImage(cv_image)
-    return jsonify({'status': 'success', 'msg': f'Result: {result}'})
-
 @presences.route('/presences')
 def list():
     presences = Presence.query.all()
-    results = {
-        "results": [
-            presence.as_dict() for presence in presences
-        ]
-    }
+    results = [
+        presence.as_dict() for presence in presences
+    ]
     return jsonify(results)
 
 @presences.route('/presence/<id>')
 def detail(id):
     presence = Presence.query.get(id)
-    results = {
-        "results": [
-            presence.as_dict()
-        ]
-    }
+    results = [
+        presence.as_dict()
+    ]
+    
     return jsonify(results)
 
 @presences.route('/presence', methods=['POST'])
 def create_presence():
     date_now = datetime.now().strftime("%Y%m%d_%H%M%S")
-    image_profile = GenerateImage.decodeBase64toImage(request.form["image_profile"], "image_profile", date_now)
-    image_ktp = GenerateImage.decodeBase64toImage(request.form["image_ktp"], "image_ktp", date_now)
-    image_face = GenerateImage.decodeBase64toImage(request.form["image_face"], "image_face", date_now)
     image_mask = GenerateImage.decodeBase64toImage(request.form["image_mask"], "image_mask", date_now)
+    mask = GenerateImage.process_image(request.form["image_mask"])
     
     presence = Presence(
         name = request.form["name"],
         nik = request.form["nik"],
-        image_profile = image_profile,
-        image_ktp = image_ktp,
-        image_face = image_face,
         image_mask = image_mask,
-        mask = 1
+        mask = mask
     )
 
     db.session.add(presence)

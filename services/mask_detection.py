@@ -30,4 +30,4 @@ class MaskDetection:
         without_mask = output_data[0][1]
 
         print(f"{with_mask} and {without_mask} so {'No mask' if with_mask < without_mask else 'Mask'}")
-        return 'No mask' if with_mask < without_mask else 'Mask'
+        return 0 if with_mask < without_mask else 1
